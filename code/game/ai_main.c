@@ -32,7 +32,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
 #include "g_local.h"
-#include "q_shared.h"
+#include "game/q_shared.h"
 #include "botlib.h"		//bot lib interface
 #include "be_aas.h"
 #include "be_ea.h"
