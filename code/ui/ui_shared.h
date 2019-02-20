@@ -23,11 +23,11 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define __UI_SHARED_H
 
 
-#include "../game/q_shared.h"
-#include "../cgame/tr_types.h"
+#include "qshared/q_shared.h"
+#include "cgame/tr_types.h"
 #include "keycodes.h"
 
-#include "../../ui/menudef.h"
+#include "ui/menudef.h"
 
 #define MAX_MENUNAME 32
 #define MAX_ITEMTEXT 64
