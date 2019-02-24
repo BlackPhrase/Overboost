@@ -21,7 +21,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 //
 // q_math.c -- stateless support routines that are included in each code module
-#include "q_shared.h"
+#include "game/q_shared.h"
 
 
 vec3_t	vec3_origin = {0,0,0};
