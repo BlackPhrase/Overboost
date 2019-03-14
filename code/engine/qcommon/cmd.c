@@ -21,8 +21,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 // cmd.c -- Quake script command processing module
 
-#include "../game/q_shared.h"
-#include "qcommon.h"
+#include "qshared/q_shared.h"
+#include "qcommon/qcommon.h"
 
 #define	MAX_CMD_BUFFER	16384
 #define	MAX_CMD_LINE	1024

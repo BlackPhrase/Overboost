@@ -24,8 +24,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  * Compression book.  The ranks are not actually stored, but implicitly defined
  * by the location of a node within a doubly-linked list */
 
-#include "../game/q_shared.h"
-#include "qcommon.h"
+#include "qshared/q_shared.h"
+#include "qcommon/qcommon.h"
 
 static int			bloc = 0;
 
