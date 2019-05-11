@@ -5,3 +5,5 @@ file(GLOB PROJECT_SOURCES
 )
 
 add_library(${PROJECT_NAME} STATIC ${PROJECT_SOURCES})
+
+target_compile_definitions(${PROJECT_NAME} PRIVATE C_ONLY)
