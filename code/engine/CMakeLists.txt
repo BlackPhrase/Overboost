@@ -11,3 +11,5 @@ add_library(${PROJECT_NAME} MODULE ${PROJECT_SOURCES})
 set_target_properties(${PROJECT_NAME} PROPERTIES
 	OUTPUT_NAME "engine"
 )
+
+target_link_libraries(${PROJECT_NAME} Overboost-qshared Overboost-botlib)
