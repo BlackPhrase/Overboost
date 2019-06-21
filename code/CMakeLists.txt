@@ -7,7 +7,7 @@ add_subdirectory(botlib)
 add_subdirectory(cgame)
 #add_subdirectory(renderer)
 add_subdirectory(ui)
-#add_subdirectory(q3_ui)
+add_subdirectory(q3_ui)
 
 add_subdirectory(game)
 
