@@ -1,6 +1,7 @@
 /*
 ===========================================================================
 Copyright (C) 1999-2005 Id Software, Inc.
+Copyright (C) 2021 BlackPhrase
 
 This file is part of Quake III Arena source code.
 
@@ -24,12 +25,16 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include "../cgame/tr_types.h"
 
-#define	REF_API_VERSION		8
+#define	REF_API_VERSION 9
 
 //
 // these are the functions exported by the refresh module
 //
 typedef struct {
+	int api_version;
+	
+	qboolean (*Init)(const void *ahInstance, void *apWindow);
+	
 	// called before the library is unloaded
 	// if the system is just reconfiguring, pass destroyWindow = qfalse,
 	// which will keep the screen from flashing to the desktop.
