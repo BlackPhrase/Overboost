@@ -35,11 +35,11 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 ** related functions that are relevant ONLY to win_glimp.c
 */
 #include <assert.h>
-#include "../renderer/tr_local.h"
-#include "../qcommon/qcommon.h"
-#include "resource.h"
+#include "../tr_local.h"
+#include "qcommon/qcommon.h"
+//#include "resource.h"
 #include "glw_win.h"
-#include "win_local.h"
+//#include "win_local.h"
 
 extern void WG_CheckHardwareGamma( void );
 extern void WG_RestoreGamma( void );
