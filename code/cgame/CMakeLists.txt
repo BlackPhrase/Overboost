@@ -1,4 +1,4 @@
-project(Overboost-cgame)
+project(overboost-cgame)
 
 file(GLOB PROJECT_SOURCES
 	${CMAKE_CURRENT_SOURCE_DIR}/*.c
@@ -10,4 +10,4 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
 	OUTPUT_NAME "cgame"
 )
 
-target_link_libraries(${PROJECT_NAME} Overboost-qshared Overboost-game_shared)
+target_link_libraries(${PROJECT_NAME} overboost-qshared overboost-game_shared)

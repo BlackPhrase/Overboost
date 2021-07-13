@@ -1,4 +1,4 @@
-project(Overboost-game_shared)
+project(overboost-game_shared)
 
 file(GLOB PROJECT_SOURCES
 	${CMAKE_CURRENT_SOURCE_DIR}/*.c

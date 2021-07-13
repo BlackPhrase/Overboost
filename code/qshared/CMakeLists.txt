@@ -1,4 +1,4 @@
-project(Overboost-qshared)
+project(overboost-qshared)
 
 file(GLOB PROJECT_SOURCES
 	${CMAKE_CURRENT_SOURCE_DIR}/*.c

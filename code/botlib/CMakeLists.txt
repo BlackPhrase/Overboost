@@ -1,4 +1,4 @@
-project(Overboost-botlib)
+project(overboost-botlib)
 
 add_definitions(-DBOTLIB)
 
@@ -13,4 +13,4 @@ add_library(${PROJECT_NAME} STATIC ${PROJECT_SOURCES})
 #	OUTPUT_NAME "gladiator"
 #)
 
-#target_link_libraries(${PROJECT_NAME} Overboost-qshared)
+#target_link_libraries(${PROJECT_NAME} overboost-qshared)
