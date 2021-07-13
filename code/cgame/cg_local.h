@@ -22,7 +22,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 //
 #include "qshared/q_shared.h"
 #include "cgame/tr_types.h"
-#include "game/bg_public.h"
+#include "game_shared/bg_public.h"
 #include "cgame/cg_public.h"
 
 
