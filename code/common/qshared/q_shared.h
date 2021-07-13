@@ -1,6 +1,7 @@
 /*
 ===========================================================================
 Copyright (C) 1999-2005 Id Software, Inc.
+Copyright (C) 2021 BlackPhrase
 
 This file is part of Quake III Arena source code.
 
@@ -152,9 +153,9 @@ float	FloatSwap (const float *f);
 
 static ID_INLINE short BigShort( short l) { return ShortSwap(l); }
 #define LittleShort
-static ID_INLINE int BigLong(int l) { LongSwap(l); }
+static ID_INLINE int BigLong(int l) { return LongSwap(l); }
 #define LittleLong
-static ID_INLINE float BigFloat(const float *l) { FloatSwap(l); }
+static ID_INLINE float BigFloat(const float *l) { return FloatSwap(l); }
 #define LittleFloat
 
 #define	PATH_SEP '\\'
@@ -309,9 +310,9 @@ inline static float LittleFloat (const float *l) { return FloatSwap(l); }
 #if !idppc
 static short BigShort( short l) { return ShortSwap(l); }
 #define LittleShort
-static int BigLong(int l) { LongSwap(l); }
+static int BigLong(int l) { return LongSwap(l); }
 #define LittleLong
-static float BigFloat(const float *l) { FloatSwap(l); }
+static float BigFloat(const float *l) { return FloatSwap(l); }
 #define LittleFloat
 #else
 #define BigShort
