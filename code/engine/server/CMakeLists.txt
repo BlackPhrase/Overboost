@@ -1,0 +1,5 @@
+aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR}/server PROJECT_SOURCES_SERVER)
+
+target_sources(${PROJECT_NAME}
+	PRIVATE ${PROJECT_SOURCES_SERVER}
+)

@@ -1,15 +1,19 @@
-project(Overboost-engine)
+project(overboost-engine)
 
-file(GLOB PROJECT_SOURCES
-	${CMAKE_CURRENT_SOURCE_DIR}/qcommon/*.c
-	${CMAKE_CURRENT_SOURCE_DIR}/client/*.c
-	${CMAKE_CURRENT_SOURCE_DIR}/server/*.c
-)
+add_library(${PROJECT_NAME} MODULE)
 
-add_library(${PROJECT_NAME} MODULE ${PROJECT_SOURCES})
+aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR} PROJECT_SOURCES)
+
+#target_sources(${PROJECT_NAME}
+	#PRIVATE ${PROJECT_SOURCES}
+#)
+
+add_subdirectory(qcommon)
+add_subdirectory(client)
+add_subdirectory(server)
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
 	OUTPUT_NAME "engine"
 )
 
-target_link_libraries(${PROJECT_NAME} Overboost-qshared Overboost-botlib)
+target_link_libraries(${PROJECT_NAME} overboost-botlib overboost-qshared)
