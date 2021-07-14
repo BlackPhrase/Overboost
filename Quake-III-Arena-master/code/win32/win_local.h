@@ -1,6 +1,7 @@
 /*
 ===========================================================================
 Copyright (C) 1999-2005 Id Software, Inc.
+Copyright (C) 2021 BlackPhrase
 
 This file is part of Quake III Arena source code.
 
@@ -77,9 +78,8 @@ int  SNDDMA_InitDS ();
 
 typedef struct
 {
-	
-	HINSTANCE		reflib_library;		// Handle to refresh DLL 
-	qboolean		reflib_active;
+	HINSTANCE		reflib_library;		// Handle to refresh DLL // TODO: unused
+	qboolean		reflib_active; // TODO: unused
 
 	HWND			hWnd;
 	HINSTANCE		hInstance;
