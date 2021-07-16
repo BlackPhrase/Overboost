@@ -24,23 +24,85 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 /// @file
 
 #include <cstdlib>
+#include <stdexcept>
 
 #include "engine/IEngine.h"
+
+#ifdef _WIN32
+#	include <windows.h>
+#elif __unix__
+#	include <dlfcn.h>
+#endif
 
 engine_export_t *gpEngine{nullptr};
 
 engine_export_t::InitProps InitProps;
 
+void *Sys_LoadLibrary(const char *sName)
+{
+#ifdef _WIN32
+	return LoadLibrary(sName);
+#elif __unix__
+	return dlopen(sName, DL_NOW);
+#else
+#	error "Unsupported platform!"
+#endif
+};
+
+void *Sys_GetExport(void *pLib, const char *sName)
+{
+#ifdef _WIN32
+	return reinterpret_cast<void*>(GetProcAddress(reinterpret_cast<HMODULE>(pLib), sName));
+#elif __unix__
+	return dlsym(pLib, sName);
+#else
+#	error "Unsupported platform!"
+#endif
+};
+
+void Sys_FreeLibrary(void *pLib)
+{
+#ifdef _WIN32
+	FreeLibrary(reinterpret_cast<HMODULE>(pLib));
+#elif __unix__
+	dlclose(pLib);
+#else
+#	error "Unsupported platform!"
+#endif
+};
+
+void LoadEngineModule()
+{
+	auto pEngineLib{Sys_LoadLibrary("engine")};
+	
+	if(!pEngineLib)
+		throw std::runtime_error("Failed to load the engine module!");
+	
+	auto pfnGetEngineAPI{reinterpret_cast<GetEngineAPI>(Sys_GetExport(pEngineLib, "GetEngineAPI"))};
+	
+	if(!pfnGetEngineAPI)
+		throw std::runtime_error("Failed to get the 'GetEngineAPI' export from the engine module!");
+	
+	gpEngine = pfnGetEngineAPI();
+	
+	if(!gpEngine)
+		throw std::runtime_error("Failed to get the engine API!");
+};
+
 int main(int argc, char **argv)
 {
+	LoadEngineModule();
+	
 	if(!gpEngine->Init(InitProps))
-		return EXIT_FAILURE;
+		throw std::runtime_error("Failed to initialize the engine!");
 
     // main game loop
 	while( 1 )
 	{
 		gpEngine->Frame();
 	};
+	
+	//Sys_FreeLibrary(gpEngineLib);
 
 	// never gets here
 	return EXIT_SUCCESS;
