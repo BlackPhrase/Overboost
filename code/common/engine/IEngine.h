@@ -6,6 +6,8 @@ constexpr auto ENGINE_API_VERSION{1};
 
 struct engine_export_t
 {
+	int version{ENGINE_API_VERSION};
+	
 	struct InitProps
 	{
 		const char *sCmdLine{""};
@@ -25,4 +27,4 @@ struct engine_export_t
 	void (*Frame)();
 };
 
-using GetEngineAPI = engine_export_t *(*)();
+using GetEngineAPI = engine_export_t *(*)(int nAPIVersion);
