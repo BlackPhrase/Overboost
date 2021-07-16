@@ -3,6 +3,16 @@
 #include "Engine.hpp"
 #include "engine/IEngine.h"
 
+#ifdef _WIN32
+#	include "qcommon/win/win_local.h"
+
+#	define EXPORT [[dllexport]]
+#elif defined(__unix__)
+#	define EXPORT [[visibility("default")]]
+#endif
+
+#define C_EXPORT extern "C" EXPORT
+
 namespace
 {
 
@@ -73,3 +83,11 @@ engine_export_t gEngine =
 };
 
 }; // namespace
+
+C_EXPORT engine_export_t *GetEngineAPI(int nAPIVersion)
+{
+	if(nAPIVersion == ENGINE_API_VERSION)
+		return gEngine;
+	
+	return nullptr;
+};
