@@ -1,6 +1,7 @@
 /*
 ===========================================================================
 Copyright (C) 1999-2005 Id Software, Inc.
+Copyright (C) 2020-2021 BlackPhrase
 
 This file is part of Quake III Arena source code.
 
@@ -26,11 +27,13 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include "engine/IEngine.h"
 
-engine_export_t *gpEngine{nullptr}:
+engine_export_t *gpEngine{nullptr};
+
+engine_export_t::InitProps InitProps;
 
 int main(int argc, char **argv)
 {
-	if(!gpEngine->Init())
+	if(!gpEngine->Init(InitProps))
 		return EXIT_FAILURE;
 
     // main game loop
@@ -44,6 +47,9 @@ int main(int argc, char **argv)
 };
 
 #ifdef _WIN32
+
+#include <windows.h>
+
 /*
 ==================
 WinMain
@@ -53,11 +59,14 @@ WinMain
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
 	// should never get a previous instance in Win32
-    if ( hPrevInstance )
+    if(hPrevInstance)
         return 0;
-
-	g_wv.hInstance = hInstance; // TODO
-	Q_strncpyz( sys_cmdline, lpCmdLine, sizeof( sys_cmdline ) );
+	
+	InitProps.hInstance = hInstance;
+	//g_wv.hInstance = hInstance; // TODO
+	
+	InitProps.sCmdLine = lpCmdLine;
+	//Q_strncpyz( sys_cmdline, lpCmdLine, sizeof( sys_cmdline ) );
 	
 	return main(__argc, __argv);
 };
