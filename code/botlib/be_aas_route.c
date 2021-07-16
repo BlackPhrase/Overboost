@@ -1,6 +1,7 @@
 /*
 ===========================================================================
 Copyright (C) 1999-2005 Id Software, Inc.
+Copyright (C) 2021 BlackPhrase
 
 This file is part of Quake III Arena source code.
 
@@ -106,7 +107,7 @@ void AAS_RoutingInfo(void)
 // Returns:				-
 // Changes Globals:		-
 //===========================================================================
-__inline int AAS_ClusterAreaNum(int cluster, int areanum)
+static inline int AAS_ClusterAreaNum(int cluster, int areanum)
 {
 	int side, areacluster;
 
@@ -166,7 +167,7 @@ void AAS_InitTravelFlagFromType(void)
 // Returns:				-
 // Changes Globals:		-
 //===========================================================================
-__inline int AAS_TravelFlagForType_inline(int traveltype)
+static inline int AAS_TravelFlagForType_inline(int traveltype)
 {
 	int tfl;
 
@@ -339,7 +340,7 @@ int AAS_EnableRoutingArea(int areanum, int enable)
 // Returns:				-
 // Changes Globals:		-
 //===========================================================================
-__inline float AAS_RoutingTime(void)
+static inline float AAS_RoutingTime(void)
 {
 	return AAS_Time();
 } //end of the function AAS_RoutingTime
@@ -379,7 +380,7 @@ int AAS_GetAreaContentsTravelFlags(int areanum)
 // Returns:				-
 // Changes Globals:		-
 //===========================================================================
-__inline int AAS_AreaContentsTravelFlags_inline(int areanum)
+static inline int AAS_AreaContentsTravelFlags_inline(int areanum)
 {
 	return aasworld.areacontentstravelflags[areanum];
 } //end of the function AAS_AreaContentsTravelFlags
