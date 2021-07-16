@@ -1,6 +1,7 @@
 /*
 ===========================================================================
 Copyright (C) 1999-2005 Id Software, Inc.
+Copyright (C) 2021 BlackPhrase
 
 This file is part of Quake III Arena source code.
 
@@ -22,7 +23,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 // win_input.c -- win32 mouse and joystick code
 // 02/21/97 JCB Added extended DirectInput code to support external controllers.
 
-#include "../client/client.h"
+#include "../client.h"
 #include "win_local.h"
 
 

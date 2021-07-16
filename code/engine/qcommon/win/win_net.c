@@ -1,6 +1,7 @@
 /*
 ===========================================================================
 Copyright (C) 1999-2005 Id Software, Inc.
+Copyright (C) 2021 BlackPhrase
 
 This file is part of Quake III Arena source code.
 
@@ -21,8 +22,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 // net_wins.c
 
-#include "../game/q_shared.h"
-#include "../qcommon/qcommon.h"
+#include "qshared/q_shared.h"
+#include "qcommon/qcommon.h"
 #include "win_local.h"
 
 static WSADATA	winsockdata;
