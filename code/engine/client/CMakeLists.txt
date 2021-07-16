@@ -1,4 +1,4 @@
-aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR}/client PROJECT_SOURCES_CLIENT)
+aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR} PROJECT_SOURCES_CLIENT)
 
 set(PLATFORM "null")
 
