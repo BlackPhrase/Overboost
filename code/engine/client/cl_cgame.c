@@ -273,6 +273,7 @@ qboolean CL_GetServerCommand( int serverCommandNumber ) {
 		// reliable commands then the client never got those first reliable commands
 		if ( clc.demoplaying )
 			return qfalse;
+
 		Com_Error( ERR_DROP, "CL_GetServerCommand: a reliable command was cycled out" );
 		return qfalse;
 	}
@@ -414,13 +415,14 @@ The cgame module is making a system call
 */
 #define	VMA(x) VM_ArgPtr(args[x])
 #define	VMF(x)	((float *)args)[x]
+
 int CL_CgameSystemCalls( int *args ) {
 	switch( args[0] ) {
 	case CG_PRINT:
-		Com_Printf( "%s", VMA(1) );
+		Com_Printf( "%s", (char *)VMA(1) );
 		return 0;
 	case CG_ERROR:
-		Com_Error( ERR_DROP, "%s", VMA(1) );
+		Com_Error( ERR_DROP, "%s", (char *)VMA(1) );
 		return 0;
 	case CG_MILLISECONDS:
 		return Sys_Milliseconds();

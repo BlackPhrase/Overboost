@@ -19,6 +19,7 @@ along with Foobar; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 ===========================================================================
 */
+
 // cl_scrn.c -- master for refresh, status bar, console, chat, notify, etc
 
 #include "client.h"
@@ -403,6 +404,7 @@ void SCR_DrawDebugGraph (void)
 		
 		if (v < 0)
 			v += cl_graphheight->integer * (1+(int)(-v / cl_graphheight->integer));
+
 		h = (int)v % cl_graphheight->integer;
 		re.DrawStretchPic( x+w-1-a, y - h, 1, h, 0, 0, 0, 0, cls.whiteShader );
 	}
@@ -544,4 +546,3 @@ void SCR_UpdateScreen( void ) {
 
 	recursive = 0;
 }
-

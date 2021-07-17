@@ -449,7 +449,6 @@ void Con_Top( void );
 void Con_Bottom( void );
 void Con_Close( void );
 
-
 //
 // cl_scrn.c
 //

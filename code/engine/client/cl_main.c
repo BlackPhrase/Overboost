@@ -3232,9 +3232,8 @@ void CL_ServerStatus_f(void) {
 		}
 		server = cls.servername;
 	}
-	else {
+	else
 		server = Cmd_Argv(1);
-	}
 
 	if ( !NET_StringToAdr( server, &to ) ) {
 		return;

@@ -1,6 +1,7 @@
 /*
 ===========================================================================
 Copyright (C) 1999-2005 Id Software, Inc.
+Copyright (C) 2021 BlackPhrase
 
 This file is part of Quake III Arena source code.
 
@@ -19,6 +20,7 @@ along with Foobar; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 ===========================================================================
 */
+
 // cl_parse.c  -- parse a message received from the server
 
 #include "client.h"
@@ -651,5 +653,3 @@ void CL_ParseServerMessage( msg_t *msg ) {
 		}
 	}
 }
-
-

@@ -1,6 +1,7 @@
 /*
 ===========================================================================
 Copyright (C) 1999-2005 Id Software, Inc.
+Copyright (C) 2021 BlackPhrase
 
 This file is part of Quake III Arena source code.
 
@@ -66,12 +67,13 @@ static void CL_Netchan_Encode( msg_t *msg ) {
 		// modify the key with the last received now acknowledged server command
 		if (!string[index])
 			index = 0;
+
 		if (string[index] > 127 || string[index] == '%') {
 			key ^= '.' << (i & 1);
 		}
-		else {
+		else
 			key ^= string[index] << (i & 1);
-		}
+
 		index++;
 		// encode the data with this key
 		*(msg->data + i) = (*(msg->data + i)) ^ key;
@@ -112,12 +114,13 @@ static void CL_Netchan_Decode( msg_t *msg ) {
 		// modify the key with the last sent and with this message acknowledged client command
 		if (!string[index])
 			index = 0;
+
 		if (string[index] > 127 || string[index] == '%') {
 			key ^= '.' << (i & 1);
 		}
-		else {
+		else
 			key ^= string[index] << (i & 1);
-		}
+
 		index++;
 		// decode the data with this key
 		*(msg->data + i) = *(msg->data + i) ^ key;

@@ -433,14 +433,14 @@ void CL_ConsolePrint( char *txt ) {
 			y = con.current % con.totallines;
 			con.text[y*con.linewidth+con.x] = (color << 8) | c;
 			con.x++;
-			if (con.x >= con.linewidth) {
+			if (con.x >= con.linewidth)
+			{
 				Con_Linefeed(skipnotify);
 				con.x = 0;
 			}
 			break;
 		}
 	}
-
 
 	// mark time for transparent overlay
 	if (con.current >= 0) {
@@ -449,6 +449,7 @@ void CL_ConsolePrint( char *txt ) {
 			prev = con.current % NUM_CON_TIMES - 1;
 			if ( prev < 0 )
 				prev = NUM_CON_TIMES - 1;
+
 			con.times[prev] = 0;
 		}
 		else

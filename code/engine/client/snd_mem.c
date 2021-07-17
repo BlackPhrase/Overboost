@@ -213,7 +213,6 @@ static wavinfo_t GetWavinfo (char *name, byte *wav, int wavlength)
 		return info;
 	}
 
-
 // find data chunk
 	FindChunk("data");
 	if (!data_p)
@@ -228,7 +227,6 @@ static wavinfo_t GetWavinfo (char *name, byte *wav, int wavlength)
 
 	return info;
 }
-
 
 /*
 ================

@@ -381,7 +381,6 @@ void S_BeginRegistration( void ) {
 	}
 }
 
-
 /*
 ==================
 S_RegisterSound
@@ -504,7 +503,7 @@ void S_SpatializeOrigin (vec3_t origin, int master_vol, int *left_vol, int *righ
 ====================
 S_StartSound
 
-Validates the parms and ques the sound up
+Validates the parms and queues the sound up
 if pos is NULL, the sound will be dynamically sourced from the entity
 Entchannel 0 will never override a playing sound
 ====================
