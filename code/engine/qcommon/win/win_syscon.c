@@ -23,7 +23,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 // win_syscon.h
 #include "../../client/client.h"
 #include "win_local.h"
-#include "resource.h"
+//#include "resource.h"
 #include <errno.h>
 #include <float.h>
 #include <fcntl.h>
@@ -310,7 +310,7 @@ void Sys_CreateConsole( void )
 	wc.cbClsExtra    = 0;
 	wc.cbWndExtra    = 0;
 	wc.hInstance     = g_wv.hInstance;
-	wc.hIcon         = LoadIcon( g_wv.hInstance, MAKEINTRESOURCE(IDI_ICON1));
+	//wc.hIcon         = LoadIcon( g_wv.hInstance, MAKEINTRESOURCE(IDI_ICON1)); // TODO
 	wc.hCursor       = LoadCursor (NULL,IDC_ARROW);
 	wc.hbrBackground = (void *)COLOR_WINDOW;
 	wc.lpszMenuName  = 0;

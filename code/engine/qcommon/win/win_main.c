@@ -22,10 +22,10 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 // win_main.c
 
-#include "../client/client.h"
-#include "../qcommon/qcommon.h"
+//#include "../../client/client.h"
+#include "qcommon/qcommon.h"
 #include "win_local.h"
-#include "resource.h"
+//#include "resource.h"
 #include <errno.h>
 #include <float.h>
 #include <fcntl.h>
@@ -1045,9 +1045,7 @@ are initialized
 #define OSR2_BUILD_NUMBER 1111
 #define WIN98_BUILD_NUMBER 1998
 
-void Sys_Init( const InitProps &aInitProps ) {
-	g_wv.hInstance = aInitProps.hInstance;
-	
+void Sys_Init() {
 	int cpuid;
 
 	// make sure the timer is high precision, otherwise
