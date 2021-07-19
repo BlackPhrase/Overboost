@@ -59,18 +59,23 @@ int Sys_Milliseconds (void)
 Sys_SnapVector
 ================
 */
+// TODO
+/*
 long fastftol( float f ) {
 	static int tmp;
 	__asm fld f
 	__asm fistp tmp
 	__asm mov eax, tmp
 }
+*/
 
 void Sys_SnapVector( float *v )
 {
 	int i;
 	float f;
 
+	// TODO
+/*
 	f = *v;
 	__asm	fld		f;
 	__asm	fistp	i;
@@ -85,6 +90,8 @@ void Sys_SnapVector( float *v )
 	__asm	fld		f;
 	__asm	fistp	i;
 	*v = i;
+*/
+	
 	/*
 	*v = fastftol(*v);
 	v++;
@@ -113,6 +120,8 @@ static void CPUID( int func, unsigned regs[4] )
 {
 	unsigned regEAX, regEBX, regECX, regEDX;
 
+	// TODO
+/*
 #ifndef __VECTORC
 	__asm mov eax, func
 	__asm __emit 00fh
@@ -127,15 +136,18 @@ static void CPUID( int func, unsigned regs[4] )
 	regs[2] = regECX;
 	regs[3] = regEDX;
 #else
+*/
 	regs[0] = 0;
 	regs[1] = 0;
 	regs[2] = 0;
 	regs[3] = 0;
-#endif
+//#endif
 }
 
 static int IsPentium( void )
 {
+	// TODO
+/*
 	__asm 
 	{
 		pushfd						// save eflags
@@ -165,6 +177,8 @@ err:
 	return qfalse;
 good:
 	return qtrue;
+*/
+	return qfalse;
 }
 
 static int Is3DNOW( void )

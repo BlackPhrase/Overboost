@@ -32,7 +32,7 @@ int      snd_linear_count;
 short*   snd_out;
 
 #if !( (defined __linux__ || defined __FreeBSD__ ) && (defined __i386__) ) // rb010123
-#if	!id386
+//#if	!id386 // TODO
 
 void S_WriteLinearBlastStereo16 (void)
 {
@@ -58,6 +58,8 @@ void S_WriteLinearBlastStereo16 (void)
 			snd_out[i+1] = val;
 	}
 }
+// TODO
+/*
 #else
 
 __declspec( naked ) void S_WriteLinearBlastStereo16 (void)
@@ -105,6 +107,7 @@ LClampDone2:
 }
 
 #endif
+*/
 #else
 // forward declare, implementation somewhere else
 void S_WriteLinearBlastStereo16 (void);

@@ -1,6 +1,7 @@
 /*
 ===========================================================================
 Copyright (C) 1999-2005 Id Software, Inc.
+Copyright (C) 2021 BlackPhrase
 
 This file is part of Quake III Arena source code.
 
@@ -53,6 +54,7 @@ static	int		*instructionPointers = NULL;
 
 #define FTOL_PTR
 
+// TODO
 #ifdef _WIN32
 
 #if defined( FTOL_PTR )
@@ -60,6 +62,10 @@ int _ftol( float );
 static	int		ftolPtr = (int)_ftol;
 #endif
 
+#endif
+
+// TODO
+/*
 void AsmCall( void );
 static	int		asmCallPtr = (int)AsmCall;
 
@@ -78,11 +84,11 @@ int qftol0F7F( void );
 
 static	int		ftolPtr = (int)qftol0F7F;
 #endif // FTOL_PTR
+*/
 
 void doAsmCall( void );
 static	int		asmCallPtr = (int)doAsmCall;
-#endif // !_WIN32
-
+//#endif // !_WIN32
 
 static	int		callMask = 0; // bk001213 - init
 
@@ -105,6 +111,8 @@ static	ELastCommand	LastCommand;
 AsmCall
 =================
 */
+// TODO
+/*
 #ifdef _WIN32
 __declspec( naked ) void AsmCall( void ) {
 int		programStack;
@@ -169,6 +177,7 @@ _asm {
 }
 
 #else //!_WIN32
+*/
 
 static	int		callProgramStack;
 static	int		*callOpStack;
@@ -192,7 +201,7 @@ void callAsmCall(void)
 }
 
 void AsmCall( void ) {
-	__asm__("doAsmCall:      			\n\t" \
+	__asm__("_doAsmCall:      			\n\t" \
 			"	movl (%%edi),%%eax			\n\t" \
 			"	subl $4,%%edi				\n\t" \
 			"   orl %%eax,%%eax				\n\t" \
@@ -201,7 +210,7 @@ void AsmCall( void ) {
 			"	addl %3,%%eax				\n\t" \
 			"	call *(%%eax)				\n\t" \
 		  " movl (%%edi),%%eax   \n\t" \
-	    " andl callMask, %%eax \n\t" \
+	    " andl _callMask, %%eax \n\t" \
 			"	jmp doret					   \n\t" \
 			"systemCall:					\n\t" \
 			"	negl %%eax					\n\t" \
@@ -212,7 +221,7 @@ void AsmCall( void ) {
 			"	pushl %%ecx					\n\t" \
 			"	pushl %%esi					\n\t" \
 			"	pushl %%edi					\n\t" \
-			"	call callAsmCall			\n\t" \
+			"	call _callAsmCall			\n\t" \
 			"	popl %%edi					\n\t" \
 			"	popl %%esi					\n\t" \
 			"	popl %%ecx					\n\t" \
@@ -224,7 +233,7 @@ void AsmCall( void ) {
 			: "ax", "di", "si", "cx" \
 	);
 }
-#endif
+//#endif
 
 static int	Constant4( void ) {
 	int		v;
@@ -1140,6 +1149,8 @@ int	VM_CallCompiled( vm_t *vm, int *args ) {
 	entryPoint = vm->codeBase;
 	opStack = &stack;
 
+	// TODO
+/*
 #ifdef _WIN32
 	__asm  {
 		pushad
@@ -1151,6 +1162,7 @@ int	VM_CallCompiled( vm_t *vm, int *args ) {
 		popad
 	}
 #else
+*/
 	{
 		static int memProgramStack;
 		static void *memOpStack;
@@ -1175,7 +1187,7 @@ int	VM_CallCompiled( vm_t *vm, int *args ) {
 		programStack = memProgramStack;
 		opStack      = memOpStack;
 	}
-#endif
+//#endif
 
 	if ( opStack != &stack[1] ) {
 		Com_Error( ERR_DROP, "opStack corrupted in compiled code" );
