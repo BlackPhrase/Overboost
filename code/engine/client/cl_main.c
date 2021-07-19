@@ -2176,6 +2176,27 @@ int CL_ScaledMilliseconds(void) {
 	return Sys_Milliseconds()*com_timescale->value;
 }
 
+typedef refexport_t *(*pfnGetRefAPI)(int version, refimport_t *ri);
+
+void *Sys_GetRefAPI(void *parms)
+{
+#ifdef OVERBOOST_RENDERER_HARD_LINKED
+	return GetRefAPI(REF_API_VERSION, parms);
+#else
+	void *pRendererLib = NULL; // TODO: Sys_LoadDll("renderer");
+	
+	if(pRendererLib)
+		Sys_Error("Failed to load the renderer module!");
+	
+	pfnGetRefAPI fnGetRefAPI = NULL; // TODO: (pfnGetRefAPI)Sys_GetExport(pRendererLib, "GetRefAPI");
+	
+	if(!fnGetRefAPI)
+		Sys_Error("Failed to get the renderer module export!");
+	
+	return fnGetRefAPI(REF_API_VERSION, parms);
+#endif
+};
+
 /*
 ============
 CL_InitRef
