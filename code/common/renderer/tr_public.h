@@ -25,15 +25,15 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include "../cgame/tr_types.h"
 
-#define	REF_API_VERSION 9
+#define	REF_API_VERSION 8
 
 //
 // these are the functions exported by the refresh module
 //
 typedef struct {
-	int api_version;
+	//int api_version;
 	
-	qboolean (*Init)(const void *ahInstance, void *apWindow);
+	//qboolean (*Init)(const void *ahInstance, void *apWindow);
 	
 	// called before the library is unloaded
 	// if the system is just reconfiguring, pass destroyWindow = qfalse,
