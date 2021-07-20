@@ -1,6 +1,7 @@
 /*
 ===========================================================================
 Copyright (C) 1999-2005 Id Software, Inc.
+Copyright (C) 2021 BlackPhrase
 
 This file is part of Quake III Arena source code.
 
@@ -2795,10 +2796,10 @@ static void FS_Startup( const char *gameName ) {
 		}
 	}
 
-	Com_ReadCDKey( "baseq3" );
+	//Com_ReadCDKey( "baseq3" ); // TODO: removed
 	fs = Cvar_Get ("fs_game", "", CVAR_INIT|CVAR_SYSTEMINFO );
 	if (fs && fs->string[0] != 0) {
-		Com_AppendCDKey( fs->string );
+		//Com_AppendCDKey( fs->string ); // TODO: removed
 	}
 
 	// add our commands

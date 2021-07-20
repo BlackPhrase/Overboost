@@ -1,6 +1,7 @@
 /*
 ===========================================================================
 Copyright (C) 1999-2005 Id Software, Inc.
+Copyright (C) 2021 BlackPhrase
 
 This file is part of Quake III Arena source code.
 
@@ -687,23 +688,23 @@ CLUI_GetCDKey
 ====================
 */
 static void CLUI_GetCDKey( char *buf, int buflen ) {
-	cvar_t	*fs;
-	fs = Cvar_Get ("fs_game", "", CVAR_INIT|CVAR_SYSTEMINFO );
-	if (UI_usesUniqueCDKey() && fs && fs->string[0] != 0) {
-		Com_Memcpy( buf, &cl_cdkey[16], 16);
+	//cvar_t *fs = Cvar_Get ("fs_game", "", CVAR_INIT|CVAR_SYSTEMINFO );
+	//if (UI_usesUniqueCDKey() && fs && fs->string[0] != 0) {
+		//Com_Memcpy( buf, &cl_cdkey[16], 16);
+		//buf[16] = 0;
+	//} else {
+		//Com_Memcpy( buf, cl_cdkey, 16
+		memset(buf, 'A', 16);
 		buf[16] = 0;
-	} else {
-		Com_Memcpy( buf, cl_cdkey, 16);
-		buf[16] = 0;
-	}
+	//}
 }
-
 
 /*
 ====================
 CLUI_SetCDKey
 ====================
 */
+/*
 static void CLUI_SetCDKey( char *buf ) {
 	cvar_t	*fs;
 	fs = Cvar_Get ("fs_game", "", CVAR_INIT|CVAR_SYSTEMINFO );
@@ -718,6 +719,7 @@ static void CLUI_SetCDKey( char *buf ) {
 		cvar_modifiedFlags |= CVAR_ARCHIVE;
 	}
 }
+*/
 
 /*
 ====================
@@ -1024,7 +1026,7 @@ int CL_UISystemCalls( int *args ) {
 		return 0;
 
 	case UI_SET_CDKEY:
-		CLUI_SetCDKey( VMA(1) );
+		//CLUI_SetCDKey( VMA(1) );
 		return 0;
 	
 	case UI_SET_PBCLSTATUS:
@@ -1107,7 +1109,7 @@ int CL_UISystemCalls( int *args ) {
 		return 0;
 
 	case UI_VERIFY_CDKEY:
-		return CL_CDKeyValidate(VMA(1), VMA(2));
+		return qtrue; // TODO: was CL_CDKeyValidate(VMA(1), VMA(2));
 
 
 		
