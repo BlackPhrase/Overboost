@@ -43,7 +43,7 @@ void *Sys_LoadLibrary(const char *sName)
 #ifdef _WIN32
 	return LoadLibrary(sName);
 #elif __unix__
-	return dlopen(sName, DL_NOW);
+	return dlopen(sName, RTDL_NOW);
 #else
 #	error "Unsupported platform!"
 #endif
@@ -83,7 +83,7 @@ void LoadEngineModule()
 	if(!pfnGetEngineAPI)
 		throw std::runtime_error("Failed to get the 'GetEngineAPI' export from the engine module!");
 	
-	gpEngine = pfnGetEngineAPI();
+	gpEngine = pfnGetEngineAPI(ENGINE_API_VERSION);
 	
 	if(!gpEngine)
 		throw std::runtime_error("Failed to get the engine API!");
