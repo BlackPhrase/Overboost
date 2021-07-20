@@ -13,7 +13,7 @@ struct engine_export_t
 		const char *sCmdLine{""};
 
 #ifdef _WIN32
-		HINSTANCE hInstance{};
+		void *hInstance{}; // TODO: HINSTANCE
 #endif
 	};
 
