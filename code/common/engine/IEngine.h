@@ -10,7 +10,7 @@ struct engine_export_t
 	
 	struct InitProps
 	{
-		const char *sCmdLine{""};
+		char *sCmdLine{nullptr};
 
 #ifdef _WIN32
 		void *hInstance{}; // TODO: HINSTANCE
@@ -27,4 +27,4 @@ struct engine_export_t
 	void (*Frame)();
 };
 
-using GetEngineAPI = engine_export_t *(*)(int nAPIVersion);
+using pfnGetEngineAPI = engine_export_t *(*)(int nAPIVersion);
