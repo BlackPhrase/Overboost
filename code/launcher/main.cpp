@@ -78,12 +78,12 @@ void LoadEngineModule()
 	if(!pEngineLib)
 		throw std::runtime_error("Failed to load the engine module!");
 	
-	auto pfnGetEngineAPI{reinterpret_cast<GetEngineAPI>(Sys_GetExport(pEngineLib, "GetEngineAPI"))};
+	auto fnGetEngineAPI{reinterpret_cast<pfnGetEngineAPI>(Sys_GetExport(pEngineLib, "GetEngineAPI"))};
 	
-	if(!pfnGetEngineAPI)
+	if(!fnGetEngineAPI)
 		throw std::runtime_error("Failed to get the 'GetEngineAPI' export from the engine module!");
 	
-	gpEngine = pfnGetEngineAPI(ENGINE_API_VERSION);
+	gpEngine = fnGetEngineAPI(ENGINE_API_VERSION);
 	
 	if(!gpEngine)
 		throw std::runtime_error("Failed to get the engine API!");
