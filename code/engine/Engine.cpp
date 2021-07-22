@@ -2,9 +2,18 @@
 
 #include "Engine.hpp"
 #include "engine/IEngine.h"
+
+extern "C"
+{
 #include "qcommon/qcommon.h"
 
+void Sys_CreateConsole();
+void Sys_InitStreamThread();
+void IN_Frame();
+};
+
 #ifdef _WIN32
+#	include <direct.h>
 #	include "qcommon/win/win_local.h"
 
 #	define EXPORT [[dllexport]]
@@ -20,7 +29,7 @@ namespace
 bool Engine_Init(const engine_export_t::InitProps &aInitProps)
 {
 #ifdef _WIN32
-	g_wv.hInstance = hInstance;
+	g_wv.hInstance = reinterpret_cast<HINSTANCE>(aInitProps.hInstance);
 #endif
 
 	// done before Com/Sys_Init since we need this for error output
@@ -107,6 +116,7 @@ void Engine_Frame()
 
 engine_export_t gEngine =
 {
+	ENGINE_API_VERSION,
 	Engine_Init,
 	Com_Shutdown,
 	Engine_Frame
