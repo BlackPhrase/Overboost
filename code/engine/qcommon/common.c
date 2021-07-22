@@ -2239,17 +2239,20 @@ static void Com_Crash_f( void ) {
 // TTimo: centralizing the cl_cdkey stuff after I discovered a buffer overflow problem with the dedicated server version
 //   not sure it's necessary to have different defaults for regular and dedicated, but I don't want to risk it
 //   https://zerowing.idsoftware.com/bugzilla/show_bug.cgi?id=470
+/*
 #ifndef DEDICATED
 char	cl_cdkey[34] = "                                ";
 #else
 char	cl_cdkey[34] = "123456789";
 #endif
+*/
 
 /*
 =================
 Com_ReadCDKey
 =================
 */
+/*
 qboolean CL_CDKeyValidate( const char *key, const char *checksum );
 void Com_ReadCDKey( const char *filename ) {
 	fileHandle_t	f;
@@ -2275,12 +2278,14 @@ void Com_ReadCDKey( const char *filename ) {
 		Q_strncpyz( cl_cdkey, "                ", 17 );
 	}
 }
+*/
 
 /*
 =================
 Com_AppendCDKey
 =================
 */
+/*
 void Com_AppendCDKey( const char *filename ) {
 	fileHandle_t	f;
 	char			buffer[33];
@@ -2305,13 +2310,15 @@ void Com_AppendCDKey( const char *filename ) {
 		Q_strncpyz( &cl_cdkey[16], "                ", 17 );
 	}
 }
+*/
 
-#ifndef DEDICATED // bk001204
+//#ifndef DEDICATED // bk001204
 /*
 =================
 Com_WriteCDKey
 =================
 */
+/*
 static void Com_WriteCDKey( const char *filename, const char *ikey ) {
 	fileHandle_t	f;
 	char			fbuffer[MAX_OSPATH];
@@ -2342,6 +2349,7 @@ static void Com_WriteCDKey( const char *filename, const char *ikey ) {
 	FS_FCloseFile( f );
 }
 #endif
+*/
 
 
 /*
@@ -2544,6 +2552,7 @@ void Com_WriteConfiguration( void ) {
 
 	Com_WriteConfigToFile( "q3config.cfg" );
 
+/*
 	// bk001119 - tentative "not needed for dedicated"
 #ifndef DEDICATED
 	fs = Cvar_Get ("fs_game", "", CVAR_INIT|CVAR_SYSTEMINFO );
@@ -2553,6 +2562,7 @@ void Com_WriteConfiguration( void ) {
 		Com_WriteCDKey( "baseq3", cl_cdkey );
 	}
 #endif
+*/
 }
 
 
