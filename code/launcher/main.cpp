@@ -91,6 +91,9 @@ void LoadEngineModule()
 
 int main(int argc, char **argv)
 {
+	InitProps.argc = argc;
+	InitProps.argv = argv;
+	
 	LoadEngineModule();
 	
 	if(!gpEngine->Init(InitProps))
@@ -127,8 +130,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	InitProps.hInstance = hInstance;
 	//g_wv.hInstance = hInstance; // TODO
 	
-	InitProps.sCmdLine = lpCmdLine;
-	//Q_strncpyz( sys_cmdline, lpCmdLine, sizeof( sys_cmdline ) );
+	//InitProps.sCmdLine = lpCmdLine; // TODO
 	
 	return main(__argc, __argv);
 };

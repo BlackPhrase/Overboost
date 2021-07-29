@@ -26,8 +26,39 @@ void IN_Frame();
 namespace
 {
 
+void Sys_PrintBinVersion(const char *name)
+{
+	char *date = __DATE__;
+	char *time = __TIME__;
+	char *sep = "==============================================================";
+	
+	fprintf( stdout, "\n\n%s\n", sep );
+#ifdef DEDICATED
+	fprintf( stdout, "Overboost Engine Dedicated Server [%s %s]\n", date, time );
+#else
+	fprintf( stdout, "Overboost Engine [%s %s]\n", date, time );
+#endif
+	fprintf( stdout, " local install: %s\n", name );
+	fprintf( stdout, "%s\n\n", sep );
+};
+
+void Sys_ParseArgs(int argc, char *argv[])
+{
+	if(argc == 2)
+	{
+		if ( (!strcmp( argv[1], "--version" ))
+		|| ( !strcmp( argv[1], "-v" )) )
+		{
+			Sys_PrintBinVersion( argv[0] );
+			exit(0); // TODO: Sys_Exit(0);
+		};
+	};
+};
+
 bool Engine_Init(const engine_export_t::InitProps &aInitProps)
 {
+	Sys_ParseArgs(aInitProps.argc, aInitProps.argv);
+	
 #ifdef _WIN32
 	g_wv.hInstance = reinterpret_cast<HINSTANCE>(aInitProps.hInstance);
 #endif
@@ -50,7 +81,25 @@ bool Engine_Init(const engine_export_t::InitProps &aInitProps)
 
 	Sys_InitStreamThread();
 
-	Com_Init(aInitProps.sCmdLine); // sys_cmdline
+	// TODO
+	
+	// merge the command line, this is kinda silly
+	int len{0};
+	int i{0};
+	for(len = 1, i = 1; i < aInitProps.argc; ++i)
+		len += strlen(aInitProps.argv[i]) + 1;
+	char *cmdline = reinterpret_cast<char*>(malloc(len)); // TODO: free
+	*cmdline = 0;
+	for(i = 1; i < aInitProps.argc; ++i)
+	{
+		if(i > 1)
+			strcat(cmdline, " ");
+		strcat(cmdline, aInitProps.argv[i]);
+	};
+	
+	//Q_strncpyz(sys_cmdline, cmdline, sizeof(sys_cmdline));
+	
+	Com_Init(cmdline); // TODO: was sys_cmdline
 	NET_Init();
 
 #ifdef _WIN32
