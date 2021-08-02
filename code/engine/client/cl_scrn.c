@@ -519,7 +519,7 @@ text to the screen.
 ==================
 */
 void SCR_UpdateScreen( void ) {
-	static int	recursive;
+	static int	recursive = 0;
 
 	if ( !scr_initialized ) {
 		return;				// not initialized yet

@@ -28,9 +28,9 @@ namespace
 
 void Sys_PrintBinVersion(const char *name)
 {
-	char *date = __DATE__;
-	char *time = __TIME__;
-	char *sep = "==============================================================";
+	const char *date = __DATE__;
+	const char *time = __TIME__;
+	const char *sep = "==============================================================";
 	
 	fprintf( stdout, "\n\n%s\n", sep );
 #ifdef DEDICATED
