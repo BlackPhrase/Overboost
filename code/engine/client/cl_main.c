@@ -25,6 +25,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "client.h"
 #include <limits.h>
 
+#include "qshared/q_sys.h"
+
 cvar_t	*cl_nodelta;
 cvar_t	*cl_debugMove;
 
@@ -2185,12 +2187,12 @@ void *Sys_GetRefAPI(void *parms)
 #ifdef OVERBOOST_RENDERER_HARD_LINKED
 	return GetRefAPI(REF_API_VERSION, parms);
 #else
-	void *pRendererLib = NULL; // TODO: Sys_LoadDll("renderer");
+	static void *pRendererLib = Sys_LoadLibrary("renderer"); // TODO: Sys_LoadDll("renderer"); // TODO: unload
 	
-	if(pRendererLib)
+	if(!pRendererLib)
 		Sys_Error("Failed to load the renderer module!");
 	
-	pfnGetRefAPI fnGetRefAPI = NULL; // TODO: (pfnGetRefAPI)Sys_GetExport(pRendererLib, "GetRefAPI");
+	static pfnGetRefAPI fnGetRefAPI = (pfnGetRefAPI)Sys_GetExport(pRendererLib, "GetRefAPI");
 	
 	if(!fnGetRefAPI)
 		Sys_Error("Failed to get the renderer module export!");
