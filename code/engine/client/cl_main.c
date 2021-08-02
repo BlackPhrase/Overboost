@@ -2245,6 +2245,12 @@ void CL_InitRef( void ) {
 	ri.CIN_UploadCinematic = CIN_UploadCinematic;
 	ri.CIN_PlayCinematic = CIN_PlayCinematic;
 	ri.CIN_RunCinematic = CIN_RunCinematic;
+	
+	ri.Sys_LowPhysicalMemory = Sys_LowPhysicalMemory;
+	
+	ri.DPrintf = Com_DPrintf;
+	
+	ri.CM_ClusterPVS = CM_ClusterPVS;
 
 	ret = Sys_GetRefAPI(&ri);
 

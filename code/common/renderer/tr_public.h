@@ -161,6 +161,13 @@ typedef struct {
 	int		(*CIN_PlayCinematic)( const char *arg0, int xpos, int ypos, int width, int height, int bits);
 	e_status (*CIN_RunCinematic) (int handle);
 
+	// BP: extended API to compile into a separate dll
+	
+	qboolean (*Sys_LowPhysicalMemory)();
+	
+	void (*DPrintf)(const char *fmt, ...);
+	
+	byte *(*CM_ClusterPVS)(int cluster);
 } refimport_t;
 
 
