@@ -28,48 +28,16 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include "engine/IEngine.h"
 
-#ifdef _WIN32
-#	include <windows.h>
-#elif __unix__
-#	include <dlfcn.h>
-#endif
+extern "C"
+{
+#include "qshared/q_sys.h"
+};
+
+/////////////////////////////////////////////////////////////////////
 
 engine_export_t *gpEngine{nullptr};
 
 engine_export_t::InitProps InitProps;
-
-void *Sys_LoadLibrary(const char *sName)
-{
-#ifdef _WIN32
-	return LoadLibrary(sName);
-#elif __unix__
-	return dlopen(sName, RTDL_NOW);
-#else
-#	error "Unsupported platform!"
-#endif
-};
-
-void *Sys_GetExport(void *pLib, const char *sName)
-{
-#ifdef _WIN32
-	return reinterpret_cast<void*>(GetProcAddress(reinterpret_cast<HMODULE>(pLib), sName));
-#elif __unix__
-	return dlsym(pLib, sName);
-#else
-#	error "Unsupported platform!"
-#endif
-};
-
-void Sys_FreeLibrary(void *pLib)
-{
-#ifdef _WIN32
-	FreeLibrary(reinterpret_cast<HMODULE>(pLib));
-#elif __unix__
-	dlclose(pLib);
-#else
-#	error "Unsupported platform!"
-#endif
-};
 
 void LoadEngineModule()
 {
