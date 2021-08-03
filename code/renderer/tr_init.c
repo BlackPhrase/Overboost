@@ -188,7 +188,7 @@ static void AssertCvarRange( cvar_t *cv, float minVal, float maxVal, qboolean sh
 ** setting variables, checking GL constants, and reporting the gfx system config
 ** to the user.
 */
-static void InitOpenGL( void )
+static void InitOpenGL(void *apWindow)
 {
 	char renderer_buffer[1024];
 
@@ -208,7 +208,7 @@ static void InitOpenGL( void )
 	{
 		GLint		temp;
 		
-		GLimp_Init();
+		GLimp_Init(apWindow);
 
 		strcpy( renderer_buffer, glConfig.renderer_string );
 		Q_strlwr( renderer_buffer );
@@ -1011,7 +1011,7 @@ void R_Register( void )
 R_Init
 ===============
 */
-void R_Init( void ) {	
+void R_Init(void *apWindow) {	
 	int	err;
 	int i;
 	byte *ptr;
@@ -1085,7 +1085,7 @@ void R_Init( void ) {
 	}
 	R_ToggleSmpFrame();
 
-	InitOpenGL();
+	InitOpenGL(apWindow);
 
 	R_InitImages();
 

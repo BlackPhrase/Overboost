@@ -1583,7 +1583,7 @@ GLimp_SpawnRenderThread
 =======================
 */
 HANDLE	renderThreadHandle;
-int		renderThreadId;
+DWORD		renderThreadId;
 qboolean GLimp_SpawnRenderThread( void (*function)( void ) ) {
 
 	renderCommandsEvent = CreateEvent( NULL, TRUE, FALSE, NULL );
