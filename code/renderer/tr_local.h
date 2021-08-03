@@ -1182,7 +1182,7 @@ qboolean	R_GetEntityToken( char *buffer, int size );
 
 model_t		*R_AllocModel( void );
 
-void    	R_Init( void );
+void    	R_Init(void *apWindow);
 image_t		*R_FindImageFile( const char *name, qboolean mipmap, qboolean allowPicmip, int glWrapClampMode );
 
 image_t		*R_CreateImage( const char *name, const byte *pic, int width, int height, qboolean mipmap
@@ -1231,7 +1231,7 @@ IMPLEMENTATION SPECIFIC FUNCTIONS
 ====================================================================
 */
 
-void		GLimp_Init( void );
+void		GLimp_Init(void *apWindow);
 void		GLimp_Shutdown( void );
 void		GLimp_EndFrame( void );
 

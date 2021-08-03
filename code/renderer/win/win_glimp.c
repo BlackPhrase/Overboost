@@ -1,6 +1,7 @@
 /*
 ===========================================================================
 Copyright (C) 1999-2005 Id Software, Inc.
+Copyright (C) 2021 BlackPhrase
 
 This file is part of Quake III Arena source code.
 
@@ -58,6 +59,9 @@ typedef enum {
 #define TRY_PFD_FAIL_HARD	2
 
 #define	WINDOW_CLASS_NAME	"Quake 3: Arena"
+
+HWND ghWnd = NULL; // TODO: g_wv.hWnd;
+HINSTANCE ghInstance = NULL; // TODO: g_wv.hInstance
 
 static void		GLW_InitExtensions( void );
 static rserr_t	GLW_SetMode( const char *drivername, 
@@ -459,7 +463,7 @@ static qboolean GLW_InitDriver( const char *drivername, int colorbits )
 	{
 		ri.Printf( PRINT_ALL, "...getting DC: " );
 
-		if ( ( glw_state.hDC = GetDC( g_wv.hWnd ) ) == NULL )
+		if ( ( glw_state.hDC = GetDC( ghWnd ) ) == NULL )
 		{
 			ri.Printf( PRINT_ALL, "failed\n" );
 			return qfalse;
@@ -518,7 +522,7 @@ static qboolean GLW_InitDriver( const char *drivername, int colorbits )
 			if ( ( r_colorbits->integer == glw_state.desktopBitsPixel ) &&
 				 ( stencilbits == 0 ) )
 			{
-				ReleaseDC( g_wv.hWnd, glw_state.hDC );
+				ReleaseDC( ghWnd, glw_state.hDC );
 				glw_state.hDC = NULL;
 
 				ri.Printf( PRINT_ALL, "...failed to find an appropriate PIXELFORMAT\n" );
@@ -538,7 +542,7 @@ static qboolean GLW_InitDriver( const char *drivername, int colorbits )
 			{
 				if ( glw_state.hDC )
 				{
-					ReleaseDC( g_wv.hWnd, glw_state.hDC );
+					ReleaseDC( ghWnd, glw_state.hDC );
 					glw_state.hDC = NULL;
 				}
 
@@ -595,8 +599,8 @@ static qboolean GLW_CreateWindow( const char *drivername, int width, int height,
 		wc.lpfnWndProc   = (WNDPROC) glw_state.wndproc;
 		wc.cbClsExtra    = 0;
 		wc.cbWndExtra    = 0;
-		wc.hInstance     = g_wv.hInstance;
-		wc.hIcon         = LoadIcon( g_wv.hInstance, MAKEINTRESOURCE(IDI_ICON1));
+		wc.hInstance     = ghInstance;
+		wc.hIcon         = LoadIcon( ghInstance, MAKEINTRESOURCE(IDI_APPLICATION)); // TODO: was LoadIcon( g_wv.hInstance, MAKEINTRESOURCE(IDI_ICON1));
 		wc.hCursor       = LoadCursor (NULL,IDC_ARROW);
 		wc.hbrBackground = (void *)COLOR_GRAYTEXT;
 		wc.lpszMenuName  = 0;
@@ -613,7 +617,7 @@ static qboolean GLW_CreateWindow( const char *drivername, int width, int height,
 	//
 	// create the HWND if one does not already exist
 	//
-	if ( !g_wv.hWnd )
+	if ( !ghWnd )
 	{
 		//
 		// compute width and height
@@ -667,7 +671,7 @@ static qboolean GLW_CreateWindow( const char *drivername, int width, int height,
 			}
 		}
 
-		g_wv.hWnd = CreateWindowEx (
+		ghWnd = CreateWindowEx (
 			 exstyle, 
 			 WINDOW_CLASS_NAME,
 			 "Quake 3: Arena",
@@ -675,16 +679,16 @@ static qboolean GLW_CreateWindow( const char *drivername, int width, int height,
 			 x, y, w, h,
 			 NULL,
 			 NULL,
-			 g_wv.hInstance,
+			 ghInstance,
 			 NULL);
 
-		if ( !g_wv.hWnd )
+		if ( !ghWnd )
 		{
 			ri.Error (ERR_FATAL, "GLW_CreateWindow() - Couldn't create window");
 		}
 	
-		ShowWindow( g_wv.hWnd, SW_SHOW );
-		UpdateWindow( g_wv.hWnd );
+		ShowWindow( ghWnd, SW_SHOW );
+		UpdateWindow( ghWnd );
 		ri.Printf( PRINT_ALL, "...created window@%d,%d (%dx%d)\n", x, y, w, h );
 	}
 	else
@@ -694,15 +698,17 @@ static qboolean GLW_CreateWindow( const char *drivername, int width, int height,
 
 	if ( !GLW_InitDriver( drivername, colorbits ) )
 	{
-		ShowWindow( g_wv.hWnd, SW_HIDE );
-		DestroyWindow( g_wv.hWnd );
-		g_wv.hWnd = NULL;
+		ShowWindow( ghWnd, SW_HIDE );
+		DestroyWindow( ghWnd );
+		ghWnd = NULL;
 
 		return qfalse;
 	}
 
-	SetForegroundWindow( g_wv.hWnd );
-	SetFocus( g_wv.hWnd );
+	SetForegroundWindow( ghWnd );
+	SetFocus( ghWnd );
+	
+	glConfig.pWindow = ghWnd;
 
 	return qtrue;
 }
@@ -1277,7 +1283,7 @@ void GLimp_EndFrame (void)
 	QGL_EnableLogging( r_logFile->integer );
 }
 
-static void GLW_StartOpenGL( void )
+static void GLW_StartOpenGL(void *apWindow)
 {
 	qboolean attemptedOpenGL32 = qfalse;
 	qboolean attempted3Dfx = qfalse;
@@ -1347,7 +1353,7 @@ static void GLW_StartOpenGL( void )
 ** to make sure that a functional OpenGL subsystem is operating
 ** when it returns to the ref.
 */
-void GLimp_Init( void )
+void GLimp_Init(void *apWindow)
 {
 	char	buf[1024];
 	cvar_t *lastValidRenderer = ri.Cvar_Get( "r_lastValidRenderer", "(uninitialized)", CVAR_ARCHIVE );
@@ -1365,7 +1371,7 @@ void GLimp_Init( void )
 
 	// save off hInstance and wndproc
 	cv = ri.Cvar_Get( "win_hinstance", "", 0 );
-	sscanf( cv->string, "%i", (int *)&g_wv.hInstance );
+	sscanf( cv->string, "%i", (int *)&ghInstance );
 
 	cv = ri.Cvar_Get( "win_wndproc", "", 0 );
 	sscanf( cv->string, "%i", (int *)&glw_state.wndproc );
@@ -1374,7 +1380,7 @@ void GLimp_Init( void )
 	r_maskMinidriver = ri.Cvar_Get( "r_maskMinidriver", "0", CVAR_LATCH );
 
 	// load appropriate DLL and initialize subsystem
-	GLW_StartOpenGL();
+	GLW_StartOpenGL(apWindow);
 
 	// get our config strings
 	Q_strncpyz( glConfig.vendor_string, qglGetString (GL_VENDOR), sizeof( glConfig.vendor_string ) );
@@ -1502,18 +1508,18 @@ void GLimp_Shutdown( void )
 	// release DC
 	if ( glw_state.hDC )
 	{
-		retVal = ReleaseDC( g_wv.hWnd, glw_state.hDC ) != 0;
+		retVal = ReleaseDC( ghWnd, glw_state.hDC ) != 0;
 		ri.Printf( PRINT_ALL, "...releasing DC: %s\n", success[retVal] );
 		glw_state.hDC   = NULL;
 	}
 
 	// destroy window
-	if ( g_wv.hWnd )
+	if ( ghWnd )
 	{
 		ri.Printf( PRINT_ALL, "...destroying window\n" );
-		ShowWindow( g_wv.hWnd, SW_HIDE );
-		DestroyWindow( g_wv.hWnd );
-		g_wv.hWnd = NULL;
+		ShowWindow( ghWnd, SW_HIDE );
+		DestroyWindow( ghWnd );
+		ghWnd = NULL;
 		glw_state.pixelFormatSet = qfalse;
 	}
 

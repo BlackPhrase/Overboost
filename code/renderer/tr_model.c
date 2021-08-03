@@ -528,7 +528,7 @@ static qboolean R_LoadMD4( model_t *mod, void *buffer, const char *mod_name ) {
 */
 void RE_BeginRegistration( glconfig_t *glconfigOut ) {
 
-	R_Init();
+	R_Init(glconfigOut->pWindow); // TODO: g_wv.hWnd
 
 	*glconfigOut = glConfig;
 
