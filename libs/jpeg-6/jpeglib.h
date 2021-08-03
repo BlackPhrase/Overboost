@@ -14,6 +14,12 @@
 #define JPEGLIB_H
 
 typedef unsigned char boolean;
+
+#ifndef INT32
+//#	define INT32 int
+typedef int INT32;
+#endif
+
 /*
  * First we include the configuration files that record how this
  * installation of the JPEG library is set up.  jconfig.h can be

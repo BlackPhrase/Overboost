@@ -19,7 +19,11 @@
 #include "jversion.h"
 #include "jerror.h"
 
-#include "../renderer/tr_local.h"
+//#include "../code/renderer/tr_local.h"
+#include "../code/common/qshared/q_shared.h"
+#include "../code/common/renderer/tr_public.h"
+
+extern refimport_t ri;
 
 #ifndef EXIT_FAILURE		/* define exit() codes if not provided */
 #define EXIT_FAILURE  1

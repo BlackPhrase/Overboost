@@ -1,6 +1,6 @@
 
-#include "../game/q_shared.h"
-#include "../qcommon/qcommon.h"
+#include "../code/common/qshared/q_shared.h"
+#include "../code/common/qcommon/qcommon.h"
 
 /*
  * Include file for users of JPEG library.
