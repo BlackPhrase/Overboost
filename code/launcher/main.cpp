@@ -68,7 +68,7 @@ int main(int argc, char **argv)
 		throw std::runtime_error("Failed to initialize the engine!");
 
     // main game loop
-	while( 1 )
+	while(true)
 	{
 		gpEngine->Frame();
 	};
@@ -96,10 +96,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
         return 0;
 	
 	InitProps.hInstance = hInstance;
-	//g_wv.hInstance = hInstance; // TODO
 	
 	//InitProps.sCmdLine = lpCmdLine; // TODO
 	
 	return main(__argc, __argv);
 };
-#endif
+#endif // _WIN32
