@@ -1,6 +1,7 @@
 /*
 ===========================================================================
 Copyright (C) 1999-2005 Id Software, Inc.
+Copyright (C) 2021 BlackPhrase
 
 This file is part of Quake III Arena source code.
 
@@ -200,6 +201,9 @@ typedef struct {
 	qboolean				isFullscreen;
 	qboolean				stereoEnabled;
 	qboolean				smpActive;		// dual processor
+	
+	void *hInstance;
+	void *pWindow;
 } glconfig_t;
 
 // FIXME: VM should be OS agnostic .. in theory
