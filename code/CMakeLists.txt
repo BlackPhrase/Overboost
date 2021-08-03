@@ -8,11 +8,11 @@ add_subdirectory(game_shared)
 add_subdirectory(botlib)
 
 add_subdirectory(cgame)
-add_subdirectory(renderer) #broken
+add_subdirectory(renderer)
 add_subdirectory(ui)
 add_subdirectory(q3_ui)
 
 add_subdirectory(game)
 
-add_subdirectory(engine) #broken
+add_subdirectory(engine)
 add_subdirectory(launcher)
