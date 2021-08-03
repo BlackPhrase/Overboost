@@ -1238,3 +1238,98 @@ refexport_t *GetRefAPI ( int apiVersion, refimport_t *rimp ) {
 
 	return &re;
 }
+
+void QDECL R_Printf( const char *msg, ... ) {
+	va_list		argptr;
+	char		text[1024];
+
+	va_start (argptr, msg);
+	vsprintf (text, msg, argptr);
+	va_end (argptr);
+
+	ri.Printf( PRINT_ALL, text );
+}
+
+void QDECL R_DPrintf( const char *msg, ... ) {
+	va_list		argptr;
+	char		text[1024];
+
+	va_start (argptr, msg);
+	vsprintf (text, msg, argptr);
+	va_end (argptr);
+
+	ri.DPrintf(text);
+}
+
+void QDECL R_Error( int level, const char *msg, ... ) {
+	va_list		argptr;
+	char		text[1024];
+
+	va_start (argptr, msg);
+	vsprintf (text, msg, argptr);
+	va_end (argptr);
+
+	ri.Error( level, text );
+}
+
+void R_Memset(void *data, const int value, const size_t count)
+{
+	// TODO: ri.Memset(data, value, count);
+	memset(data, value, count);
+};
+
+void R_Memcpy(void *dest, const void *src, const size_t count)
+{
+	// TODO: ri.Memcpy(dest, src, count);
+	memcpy(dest, src, count);
+};
+
+#ifndef CGAME_HARD_LINKED
+// this is only here so the functions in q_shared.c can link (FIXME)
+
+void QDECL Com_Error( int level, const char *error, ... ) {
+	va_list		argptr;
+	char		text[1024];
+
+	va_start (argptr, error);
+	vsprintf (text, error, argptr);
+	va_end (argptr);
+
+	R_Error( level, "%s", text);
+}
+
+void QDECL Com_Printf( const char *msg, ... ) {
+	va_list		argptr;
+	char		text[1024];
+
+	va_start (argptr, msg);
+	vsprintf (text, msg, argptr);
+	va_end (argptr);
+
+	R_Printf ("%s", text);
+}
+
+// endof required by q_shared.c section
+
+void QDECL Com_DPrintf( const char *msg, ... ) {
+	va_list		argptr;
+	char		text[1024];
+
+	va_start (argptr, msg);
+	vsprintf (text, msg, argptr);
+	va_end (argptr);
+	
+	R_DPrintf("%s", text);
+};
+
+void QDECL Com_Memset(void *data, const int value, const size_t count)
+{
+	R_Memset(data, value, count);
+};
+
+void QDECL Com_Memcpy(void *dest, const void *src, const size_t count)
+{
+	R_Memcpy(dest, src, count);
+};
+
+#endif
