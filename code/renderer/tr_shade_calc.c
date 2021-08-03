@@ -1018,7 +1018,7 @@ void RB_CalcRotateTexCoords( float degsPerSecond, float *st )
 
 
 
-
+/*
 #if id386 && !( (defined __linux__ || defined __FreeBSD__ ) && (defined __i386__ ) ) // rb010123
 
 long myftol( float f ) {
@@ -1029,6 +1029,7 @@ long myftol( float f ) {
 }
 
 #endif
+*/
 
 /*
 ** RB_CalcSpecularAlpha
