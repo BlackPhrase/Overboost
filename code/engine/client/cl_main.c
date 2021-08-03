@@ -2199,12 +2199,12 @@ void *Sys_GetRefAPI(void *parms)
 #ifdef OVERBOOST_RENDERER_HARD_LINKED
 	return GetRefAPI(REF_API_VERSION, parms);
 #else
-	static void *pRendererLib = Sys_LoadLibrary("renderer"); // TODO: Sys_LoadDll("renderer"); // TODO: unload
+	void *pRendererLib = Sys_LoadLibrary("renderer"); // TODO: Sys_LoadDll("renderer"); // TODO: unload
 	
 	if(!pRendererLib)
 		Sys_Error("Failed to load the renderer module!");
 	
-	static pfnGetRefAPI fnGetRefAPI = (pfnGetRefAPI)Sys_GetExport(pRendererLib, "GetRefAPI");
+	pfnGetRefAPI fnGetRefAPI = (pfnGetRefAPI)Sys_GetExport(pRendererLib, "GetRefAPI");
 	
 	if(!fnGetRefAPI)
 		Sys_Error("Failed to get the renderer module export!");
