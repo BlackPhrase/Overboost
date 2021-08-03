@@ -27,6 +27,10 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include "qshared/q_sys.h"
 
+#ifdef _WIN32
+#	include "../win/win_local.h"
+#endif
+
 cvar_t	*cl_nodelta;
 cvar_t	*cl_debugMove;
 
@@ -2118,8 +2122,16 @@ CL_InitRenderer
 ============
 */
 void CL_InitRenderer( void ) {
+#ifdef _WIN32
+	cls.glconfig.hInstance = g_wv.hInstance;
+#endif
+	
 	// this sets up the renderer and calls R_Init
 	re.BeginRegistration( &cls.glconfig );
+	
+#ifdef _WIN32
+	g_wv.hWnd = cls.glconfig.pWindow;
+#endif
 
 	// load character sets
 	cls.charSetShader = re.RegisterShader( "gfx/2d/bigchars" );
