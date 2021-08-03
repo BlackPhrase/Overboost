@@ -23,4 +23,4 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
 	OUTPUT_NAME "renderer"
 )
 
-target_link_libraries(${PROJECT_NAME} overboost-qshared)
+target_link_libraries(${PROJECT_NAME} overboost-qshared overboost-jpeglib)
