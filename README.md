@@ -4,7 +4,7 @@ An id Tech 3 derived game engine
 
 ## Building
 
-Currently buildable on Windows using MinGW (v9.2.0 to be specific, but a lower version will also be fine as long as it supports C11 and C++17 standards)
+Currently buildable on Windows using CMake and MinGW (v9.2.0 to be specific, but a lower version will also be fine as long as it supports C11 and C++17 standards). Only Debug version is buildable at the moment
 
 ## Installation and Running
 
