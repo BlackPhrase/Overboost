@@ -1,6 +1,7 @@
 /*
 ===========================================================================
 Copyright (C) 1999-2005 Id Software, Inc.
+Copyright (C) 2021 BlackPhrase
 
 This file is part of Quake III Arena source code.
 
@@ -547,7 +548,7 @@ qboolean R_inPVS( const vec3_t p1, const vec3_t p2 ) {
 	byte	*vis;
 
 	leaf = R_PointInLeaf( p1 );
-	vis = CM_ClusterPVS( leaf->cluster );
+	vis = ri.CM_ClusterPVS( leaf->cluster );
 	leaf = R_PointInLeaf( p2 );
 
 	if ( !(vis[leaf->cluster>>3] & (1<<(leaf->cluster&7))) ) {

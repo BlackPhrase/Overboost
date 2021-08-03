@@ -1,6 +1,7 @@
 /*
 ===========================================================================
 Copyright (C) 1999-2005 Id Software, Inc.
+Copyright (C) 2021 BlackPhrase
 
 This file is part of Quake III Arena source code.
 
@@ -1150,7 +1151,7 @@ Touch all images to make sure they are resident
 */
 void RE_EndRegistration( void ) {
 	R_SyncRenderThread();
-	if (!Sys_LowPhysicalMemory()) {
+	if (!ri.Sys_LowPhysicalMemory()) {
 		RB_ShowImages();
 	}
 }
