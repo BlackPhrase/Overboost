@@ -1,6 +1,7 @@
 /*
 ===========================================================================
 Copyright (C) 1999-2005 Id Software, Inc.
+Copyright (C) 2021 BlackPhrase
 
 This file is part of Quake III Arena source code.
 
@@ -1190,84 +1191,28 @@ void    Sys_ConfigureFPU() { // bk001213 - divide by zero
 #endif // __linux
 }
 
-void Sys_PrintBinVersion( const char* name ) {
-  char* date = __DATE__;
-  char* time = __TIME__;
-  char* sep = "==============================================================";
-  fprintf( stdout, "\n\n%s\n", sep );
-#ifdef DEDICATED
-  fprintf( stdout, "Linux Quake3 Dedicated Server [%s %s]\n", date, time );  
-#else
-  fprintf( stdout, "Linux Quake3 Full Executable  [%s %s]\n", date, time );  
-#endif
-  fprintf( stdout, " local install: %s\n", name );
-  fprintf( stdout, "%s\n\n", sep );
-}
-
-void Sys_ParseArgs( int argc, char* argv[] ) {
-
-  if ( argc==2 )
-  {
-    if ( (!strcmp( argv[1], "--version" ))
-         || ( !strcmp( argv[1], "-v" )) )
-    {
-      Sys_PrintBinVersion( argv[0] );
-      Sys_Exit(0);
-    }
-  }
-}
-
 #include "../client/client.h"
 extern clientStatic_t cls;
 
 int main ( int argc, char* argv[] )
 {
   // int 	oldtime, newtime; // bk001204 - unused
-  int   len, i;
-  char  *cmdline;
   void Sys_SetDefaultCDPath(const char *path);
 
   // go back to real user for config loads
   saved_euid = geteuid();
   seteuid(getuid());
 
-  Sys_ParseArgs( argc, argv );  // bk010104 - added this for support
+  //Sys_ParseArgs( argc, argv );  // bk010104 - added this for support
 
   Sys_SetDefaultCDPath(argv[0]);
-
-  // merge the command line, this is kinda silly
-  for (len = 1, i = 1; i < argc; i++)
-    len += strlen(argv[i]) + 1;
-  cmdline = malloc(len);
-  *cmdline = 0;
-  for (i = 1; i < argc; i++)
-  {
-    if (i > 1)
-      strcat(cmdline, " ");
-    strcat(cmdline, argv[i]);
-  }
 
   // bk000306 - clear queues
   memset( &eventQue[0], 0, MAX_QUED_EVENTS*sizeof(sysEvent_t) ); 
   memset( &sys_packetReceived[0], 0, MAX_MSGLEN*sizeof(byte) );
 
-  Com_Init(cmdline);
-  NET_Init();
-
-  Sys_ConsoleInputInit();
-
-  fcntl(0, F_SETFL, fcntl (0, F_GETFL, 0) | FNDELAY);
-	
-#ifdef DEDICATED
-	// init here for dedicated, as we don't have GLimp_Init
-	InitSig();
-#endif
-
   while (1)
   {
-#ifdef __linux__
-    Sys_ConfigureFPU();
-#endif
     Com_Frame ();
   }
 }
