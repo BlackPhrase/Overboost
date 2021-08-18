@@ -1,6 +1,7 @@
 /*
 ===========================================================================
 Copyright (C) 1999-2005 Id Software, Inc.
+Copyright (C) 2021 BlackPhrase
 
 This file is part of Quake III Arena source code.
 
@@ -315,87 +316,6 @@ Sys_CheckCD
 Return true if the proper CD is in the drive
 ================
 */
-
-qboolean Sys_ObjectIsCDRomDevice(io_object_t object)
-{
-    CFStringRef value;
-    kern_return_t krc;
-    CFDictionaryRef properties;
-    qboolean isCDROM = qfalse;
-    io_iterator_t parentIterator;
-    io_object_t parent;
-    
-    krc = IORegistryEntryCreateCFProperties(object, &properties, kCFAllocatorDefault, (IOOptionBits)0);
-    if (krc != KERN_SUCCESS) {
-        fprintf(stderr, "IORegistryEntryCreateCFProperties returned 0x%08x -- %s\n", krc, mach_error_string(krc));
-        return qfalse;
-    }
-
-    //NSLog(@"properties = %@", properties);
-    
-    // See if this is a CD-ROM
-    value = CFDictionaryGetValue(properties, CFSTR(kIOCDMediaTypeKey));
-    if (value && CFStringCompare(value, CFSTR("CD-ROM"), 0) == kCFCompareEqualTo)
-        isCDROM = qtrue;
-    CFRelease(properties);
-
-    // If it isn't check each of its parents.  It seems that the parent enumerator only returns the immediate parent.  Maybe the plural indicates that an object can have multiple direct parents.  So, we'll call ourselves recursively for each parent.
-    if (!isCDROM) {
-        krc = IORegistryEntryGetParentIterator(object, kIOServicePlane, &parentIterator);
-        if (krc != KERN_SUCCESS) {
-            fprintf(stderr, "IOServiceGetMatchingServices returned 0x%08x -- %s\n",
-                    krc, mach_error_string(krc));
-        } else {
-            while (!isCDROM && (parent = IOIteratorNext(parentIterator))) {
-                if (Sys_ObjectIsCDRomDevice(parent))
-                    isCDROM = qtrue;
-                IOObjectRelease(parent);
-            }
-    
-            IOObjectRelease(parentIterator);
-        }
-    }
-    
-    //NSLog(@"Sys_ObjectIsCDRomDevice -> %d", isCDROM);
-    return isCDROM;
-}
-
-qboolean Sys_IsCDROMDevice(const char *deviceName)
-{
-    kern_return_t krc;
-    io_iterator_t deviceIterator;
-    mach_port_t masterPort;
-    io_object_t object;
-    qboolean isCDROM = qfalse;
-    
-    krc = IOMasterPort(bootstrap_port, &masterPort);
-    if (krc != KERN_SUCCESS) {
-        fprintf(stderr, "IOMasterPort returned 0x%08x -- %s\n", krc, mach_error_string(krc));
-        return qfalse;
-    }
-
-    // Get an iterator for this BSD device.  If it is a CD, it will likely only be one partition of the larger CD-ROM device.
-    krc = IOServiceGetMatchingServices(masterPort,
-                                       IOBSDNameMatching(masterPort, 0, deviceName),
-                                       &deviceIterator);
-    if (krc != KERN_SUCCESS) {
-        fprintf(stderr, "IOServiceGetMatchingServices returned 0x%08x -- %s\n",
-                krc, mach_error_string(krc));
-        return qfalse;
-    }
-
-    while (!isCDROM && (object = IOIteratorNext(deviceIterator))) {
-        if (Sys_ObjectIsCDRomDevice(object)) {
-            isCDROM = qtrue;
-        }
-        IOObjectRelease(object);
-    }
-    
-    IOObjectRelease(deviceIterator);
-
-    //NSLog(@"Sys_IsCDROMDevice -> %d", isCDROM);
-    return isCDROM;
-}
 
 qboolean        Sys_CheckCD( void )
 {
