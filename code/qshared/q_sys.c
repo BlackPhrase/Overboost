@@ -24,7 +24,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #ifdef _WIN32
 #	include <windows.h> // TODO: libloaderapi.h
-#elif __unix__
+#elif __unix__ || __APPLE__
 #	include <dlfcn.h>
 #endif
 
@@ -32,8 +32,8 @@ void *Sys_LoadLibrary(const char *sName)
 {
 #ifdef _WIN32
 	return LoadLibrary(sName);
-#elif __unix__
-	return dlopen(sName, RTDL_NOW);
+#elif __unix__ || __APPLE__
+	return dlopen(sName, RTLD_NOW);
 #else
 #	error "Unsupported platform!"
 #endif
@@ -43,7 +43,7 @@ void *Sys_GetExport(void *pLib, const char *sName)
 {
 #ifdef _WIN32
 	return (void*)GetProcAddress((HMODULE)pLib, sName);
-#elif __unix__
+#elif __unix__ || __APPLE__
 	return dlsym(pLib, sName);
 #else
 #	error "Unsupported platform!"
@@ -54,7 +54,7 @@ void Sys_FreeLibrary(void *pLib)
 {
 #ifdef _WIN32
 	FreeLibrary((HMODULE)pLib);
-#elif __unix__
+#elif __unix__ || __APPLE__
 	dlclose(pLib);
 #else
 #	error "Unsupported platform!"

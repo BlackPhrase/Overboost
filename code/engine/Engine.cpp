@@ -40,7 +40,7 @@ void IN_Frame();
 #	include "qcommon/win/win_local.h"
 
 #	define EXPORT [[dllexport]]
-#elif defined(__unix__)
+#elif defined(__unix__) || defined(__APPLE__)
 #	define EXPORT [[visibility("default")]]
 #endif
 

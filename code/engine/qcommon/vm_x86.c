@@ -55,21 +55,20 @@ static	int		*instructionPointers = NULL;
 #define FTOL_PTR
 
 // TODO
-#ifdef _WIN32
+#ifdef _MSC_VER
 
 #if defined( FTOL_PTR )
 int _ftol( float );
 static	int		ftolPtr = (int)_ftol;
 #endif
 
-#endif
-
 // TODO
 /*
 void AsmCall( void );
 static	int		asmCallPtr = (int)AsmCall;
+*/
 
-#else // _WIN32
+#else // _MSC_VER
 
 #if defined( FTOL_PTR )
 // bk001213 - BEWARE: does not work! UI menu etc. broken - stack!
@@ -82,13 +81,12 @@ int qftol0E7F( void ); // bk010102 - fixed bogus bits (duh)
 int qftol0F7F( void );
 
 
-static	int		ftolPtr = (int)qftol0F7F;
+static void (*ftolPtr) = qftol0F7F;
 #endif // FTOL_PTR
-*/
 
 void doAsmCall( void );
-static	int		asmCallPtr = (int)doAsmCall;
-//#endif // !_WIN32
+static void (*asmCallPtr) = doAsmCall;
+#endif // !_MSC_VER
 
 static	int		callMask = 0; // bk001213 - init
 

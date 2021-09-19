@@ -20,7 +20,7 @@ along with Foobar; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 ===========================================================================
 */
-#import "../client/client.h"
+//#import "client/client.h"
 #import "macosx_local.h"
 
 #import "dlfcn.h"
@@ -43,21 +43,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #endif
 
 qboolean stdin_active = qfalse;
-
-//===========================================================================
-
-int main(int argc, const char *argv[]) {
-#ifdef DEDICATED
-    Q3Controller *controller;
-    
-    stdin_active = qtrue;
-    controller = [[Q3Controller alloc] init];
-    [controller quakeMain];
-    return 0;
-#else
-    return NSApplicationMain(argc, argv);
-#endif
-}
 
 //===========================================================================
 

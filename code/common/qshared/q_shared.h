@@ -164,7 +164,7 @@ static ID_INLINE float BigFloat(const float *l) { return FloatSwap(l); }
 
 //======================= MAC OS X DEFINES =====================
 
-#if defined(MACOS_X)
+#if defined(__APPLE__) //#if defined(MACOS_X)
 
 #define MAC_STATIC
 #define __cdecl
@@ -185,20 +185,21 @@ static ID_INLINE float BigFloat(const float *l) { return FloatSwap(l); }
 #define __rlwimi(out, in, shift, maskBegin, maskEnd) asm("rlwimi %0,%1,%2,%3,%4" : "=r" (out) : "r" (in), "i" (shift), "i" (maskBegin), "i" (maskEnd))
 #define __dcbt(addr, offset) asm("dcbt %0,%1" : : "b" (addr), "r" (offset))
 
-static inline unsigned int __lwbrx(register void *addr, register int offset) {
-    register unsigned int word;
+static inline unsigned int __lwbrx(/*register*/ void *addr, /*register*/ int offset) {
+    /*register*/ unsigned int word;
     
     asm("lwbrx %0,%2,%1" : "=r" (word) : "r" (addr), "b" (offset));
     return word;
 }
 
-static inline unsigned short __lhbrx(register void *addr, register int offset) {
-    register unsigned short halfword;
+static inline unsigned short __lhbrx(/*register*/ void *addr, /*register*/ int offset) {
+    /*register*/ unsigned short halfword;
     
     asm("lhbrx %0,%2,%1" : "=r" (halfword) : "r" (addr), "b" (offset));
     return halfword;
 }
 
+/*
 static inline float __fctiw(register float f) {
     register float fi;
     
@@ -206,6 +207,7 @@ static inline float __fctiw(register float f) {
 
     return fi;
 }
+*/
 
 #define BigShort
 static inline short LittleShort(short l) { return ShortSwap(l); }

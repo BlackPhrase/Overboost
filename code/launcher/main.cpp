@@ -57,8 +57,22 @@ void LoadEngineModule()
 		throw std::runtime_error("Failed to get the engine API!");
 };
 
+//===========================================================================
+
 int main(int argc, char **argv)
 {
+#ifdef __APPLE__
+#   ifdef DEDICATED
+    Q3Controller *controller;
+    
+    stdin_active = qtrue;
+    controller = [[Q3Controller alloc] init];
+    [controller quakeMain];
+    return 0;
+#   else
+    return NSApplicationMain(argc, argv);
+#   endif
+#else
 	InitProps.argc = argc;
 	InitProps.argv = argv;
 	
@@ -77,6 +91,7 @@ int main(int argc, char **argv)
 
 	// never gets here
 	return EXIT_SUCCESS;
+#endif
 };
 
 #ifdef _WIN32
